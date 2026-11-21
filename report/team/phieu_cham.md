@@ -20,7 +20,7 @@ Nhóm số n chấm nhóm số n + 1; nhóm cuối chấm nhóm 1. Chấm theo b
 
 **Một câu hỏi cho đội trình:** Với pha phân tích chính chỉ diễn ra **02–15/01/2027**, nhóm dựa vào bằng chứng công suất nào để đảm bảo thu đủ **5.980 yêu cầu hợp lệ/nhóm** (tương đương trung bình khoảng **427 yêu cầu/nhóm/ngày**, **21,4 yêu cầu/nhân viên/ngày** nếu phân đều 14 ngày) và vẫn theo dõi đủ **7 ngày** mở lại, khi trước đó nhóm chỉ có dữ liệu giả lập từ **1.200 yêu cầu**? Nếu không đủ cỡ mẫu, ai có quyền lùi ngày **25/01/2027** và quyết định theo quy tắc nào?
 
-**Câu trả lời của đội trình (ghi lại tại buổi):** **Chưa có câu trả lời trực tiếp tại buổi bảo vệ.** Hội đồng để trống phần nội dung phát biểu, không tự viết thay đội trình.
+**Câu trả lời của đội trình (ghi lại tại buổi):** **Nhóm hiện chưa có dữ liệu thực tế để đảm bảo thu đủ 5.980 yêu cầu/nhóm, vì 1.200 yêu cầu ban đầu chỉ là dữ liệu giả lập. Trước khi chạy pilot, nhóm cần kiểm tra số yêu cầu thực tế mỗi ngày để xác nhận có đạt khoảng 427 yêu cầu/nhóm/ngày hay không. Nếu không đủ mẫu hoặc chưa theo dõi đủ 7 ngày, nhóm sẽ chưa đưa ra quyết định Go. Giám đốc vận hành là người phụ trách pilot và cần phê duyệt việc lùi ngày 25/01/2027 để tiếp tục thu thập dữ liệu.**
 
 ---
 
