@@ -39,13 +39,18 @@ pilot:
     randomized: true
     stratified_by: "depot"
     randomization: "bốc thăm bằng code với seed chốt trước khi bắt đầu"
-  # Rollout chính thức chỉ 3 bước; không dùng bước 0.75 ở bất kỳ báo cáo nào.
-  rollout: [0.10, 0.25, 0.50]     # mỗi bước một tuần
+  # Rollout chính thức chỉ 3 bước; không dùng bước 0.75.
+  rollout: [0.10, 0.25, 0.50]
+  # 0.10/0.25: 1 tuần kiểm tra an toàn. 0.50: tối thiểu 2 tuần hoặc đến khi m>=299 (~9,74 ngày ước tính).
+  rollout_step_days:
+    "0.10": 7
+    "0.25": 7
+    "0.50": 14
+  rollout_step_0_50_rule: "max(14 ngày lịch, thời gian đạt m>=299 yêu cầu đủ điều kiện/nhân viên); chỉ số chính chỉ trên mẫu chín"
   review_sampling_by_rollout:
     "0.10": "xem lại 100%"
     "0.25": "xem lại 50%"
     "0.50": "xem lại 20%"
-  # Luật dừng khẩn cấp: hoàn trùng = dừng NGAY; mở lại so đối chứng = cửa sổ 3 ngày.
   emergency_stop_clarification:
     duplicate_refund: "stop_immediately_on_first_case"
     reopen_vs_control_or_cap_6pct: "require_3_consecutive_days"
@@ -74,10 +79,10 @@ pilot:
     spillover_risk: "có rủi ro chia sẻ câu trả lời trong depot; giảm bằng quyền truy cập theo staff_id và log lượt mở trợ lý"
     predeclared: "chỉ số chính, MDE, cách chia, luật dừng và ngày quyết định được ghi trước khi bắt đầu"
   stop_rules:
-    - "KHẨN CẤP–HOÀN TRÙNG: NẾU >= 1 ca hoàn tiền trùng (cùng request_id có >= 2 lần refund_ledger_write status=ok, hoặc thiếu idempotency_key) TRONG tức thì khi phát hiện THÌ Giám đốc vận hành tắt trợ lý trong 30 phút NGAY (không đợi 3 ngày) KHÔNG THÌ không được nhận yêu cầu mới bằng trợ lý"
-    - "AN TOÀN–MỞ LẠI: NẾU tỉ lệ mở lại 7 ngày của nhóm trợ lý cao hơn đối chứng >= 2 điểm hoặc vượt trần tuyệt đối 6% TRONG 3 ngày liên tiếp THÌ Giám đốc vận hành tắt trợ lý trong 30 phút KHÔNG THÌ không được sang bước rollout tiếp"
-    - "CHI PHÍ: NẾU chi phí mỗi việc thành công (phạm vi noi_dia+hang_nang) > 8.000 đ TRONG 2 tuần liên tiếp THÌ PM trợ lý hoàn phí thu hẹp về noi_dia và giới hạn 2 lần chạy KHÔNG THÌ không được mở hang_nang"
-    - "SỬ DỤNG: NẾU tỉ lệ bỏ qua gợi ý > 40% TRONG 1 tuần THÌ Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày KHÔNG THÌ không được chuyển bước rollout"
+    - "KHẨN CẤP–HOÀN TRÙNG: NẾU >= 1 ca hoàn tiền trùng (cùng request_id có >= 2 lần refund_ledger_write status=ok, hoặc thiếu idempotency_key) TRONG tức thì khi phát hiện THÌ Giám đốc vận hành tắt trợ lý trong 30 phút và tạm dừng nhận yêu cầu mới bằng trợ lý. Nếu điều kiện NẾU không xảy ra THÌ được phép tiếp tục phục vụ bằng trợ lý."
+    - "AN TOÀN–MỞ LẠI: NẾU tỉ lệ mở lại 7 ngày của nhóm trợ lý cao hơn đối chứng >= 2 điểm hoặc vượt trần tuyệt đối 6% TRONG 3 ngày liên tiếp THÌ Giám đốc vận hành tắt trợ lý trong 30 phút và không sang bước rollout tiếp. Nếu điều kiện NẾU không xảy ra THÌ được phép sang bước rollout tiếp theo lịch."
+    - "CHI PHÍ: NẾU chi phí mỗi việc thành công (phạm vi noi_dia+hang_nang) > 8.000 đ TRONG 2 tuần liên tiếp THÌ PM trợ lý hoàn phí thu hẹp về noi_dia và giới hạn 2 lần chạy. Nếu điều kiện NẾU không xảy ra THÌ được phép giữ hang_nang trong phạm vi đã duyệt."
+    - "SỬ DỤNG: NẾU tỉ lệ bỏ qua gợi ý > 40% TRONG 1 tuần THÌ Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày và tạm dừng chuyển bước rollout. Nếu điều kiện NẾU không xảy ra THÌ được phép chuyển bước rollout theo lịch."
   interim_looks: "chỉ kiểm tra chỉ số an toàn"
   rollback: "Giám đốc vận hành bấm cờ tắt, hiệu lực 30 phút; khách được phục vụ bằng luồng nhân viên tự làm"
   decision_date: "2027-01-05"
