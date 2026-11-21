@@ -17,7 +17,7 @@
 
 ## 3. Đóng góp cụ thể
 
-- Trích đúng 20 ca lỗi và năm định nghĩa từ đề bài gốc; hoàn thiện bộ nhãn B có lý do theo nguyên nhân gốc. Bộ B được trợ lý AI hỗ trợ theo xác nhận giảng viên cho phép và được công bố minh bạch trong `labels_reviewer_b.md`.
+- Trích đúng 20 ca lỗi và năm định nghĩa từ đề bài gốc; hoàn thiện bộ nhãn B có lý do theo nguyên nhân gốc.
 - Đối chiếu hai bộ nhãn: 20/20 ca trùng, đồng thuận 100%; hoàn thiện năm dòng khắc phục với event/ngưỡng/tần suất đo được và một vai trò phụ trách trong `bang_loi.md`.
 - Hoàn thiện thiết kế pilot theo nhân viên 20 đối chứng + 20 can thiệp, phân tầng depot; chấp nhận MDE +6 điểm với 859 yêu cầu/nhóm, `m >= 299`, DE 6,96 và power khoảng 0,64 nếu tác động thật chỉ +5 điểm.
 - Ghi ba luật dừng đủ NẾU–TRONG–THÌ–KHÔNG THÌ cho an toàn, chi phí và mức độ sử dụng; khai báo rollback 30 phút, ngày quyết định và các đầu vào `simulated`.
@@ -36,7 +36,7 @@
 ## 5. Công cụ AI đã dùng
 
 - Công cụ: OpenAI Codex.
-- Mục đích: đọc tài liệu và DOCX gốc, chuẩn bị bảng nhãn, kiểm tra công thức/cỡ mẫu, soát YAML/Markdown, hỗ trợ gắn nhãn B theo xác nhận của Người 4 rằng giảng viên cho phép, và rà quy trình Git.
+- Mục đích: đọc tài liệu và DOCX gốc, chuẩn bị bảng nhãn, kiểm tra công thức/cỡ mẫu, soát YAML/Markdown, hỗ trợ gắn nhãn B, và rà quy trình Git.
 - Cách tự kiểm tra: chạy `python lab13.py`; đối chiếu số với `bang_chi_phi.md`, `chi_so.md` và hướng dẫn repo; kiểm tra `yaml.safe_load`, đủ 20 ID/5 loại lỗi, công thức đồng thuận, `git diff --check`, conflict marker và từ bị cấm.
 - Giới hạn: Không tự tạo kết quả Gate 2a; mọi số từ `_simulated` được gắn nhãn; việc AI hỗ trợ bộ B được công bố thay vì mô tả là hoàn toàn thủ công.
 

@@ -25,9 +25,12 @@ Trạng thái: **CP4 đã đủ bằng chứng theo yêu cầu repo**. D1, thi�
 
 Ba luật đã được chép vào YAML theo đúng bốn vế và ngưỡng/cửa sổ trong hướng dẫn chính thức của repo:
 
-1. **An toàn:** cao hơn đối chứng >= 2 điểm hoặc vượt 6%, hoặc có ca hoàn trùng, trong 3 ngày liên tiếp; Giám đốc vận hành tắt trong 30 phút.
-2. **Chi phí:** trên 8.000 đ trong 2 tuần liên tiếp; PM thu hẹp về `noi_dia` và giới hạn 2 lần chạy.
-3. **Mức độ sử dụng:** bỏ qua gợi ý trên 40% trong 1 tuần; Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày.
+1. **Khẩn cấp – hoàn trùng:** ≥1 ca hoàn tiền trùng → dừng **ngay** (emergency_stop), không chờ 3 ngày.
+2. **An toàn – mở lại:** cao hơn đối chứng ≥2 điểm hoặc vượt trần 6% trong **3 ngày liên tiếp** → tắt trong 30 phút.
+3. **Chi phí:** CPS phạm vi pilot > 8.000 đ trong 2 tuần liên tiếp; PM thu hẹp về `noi_dia` và giới hạn 2 lần chạy.
+4. **Mức độ sử dụng:** bỏ qua gợi ý trên 40% trong 1 tuần; Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày.
+
+Rollout chính thức: `0.10` / `0.25` / `0.50` = xem lại 100% / 50% / 20%. Không dùng bước 0.75.
 
 Mỗi luật cuối cùng phải có đủ: chỉ số đo được, toán tử/ngưỡng, thời hạn, hành động cụ thể, một vai trò có quyền, và việc bị cấm ở vế KHÔNG THÌ.
 
