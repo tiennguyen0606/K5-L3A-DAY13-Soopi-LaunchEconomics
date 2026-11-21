@@ -1,6 +1,6 @@
 # Ghi chú chuẩn bị và bàn giao CP4 · Người 4
 
-Trạng thái: **Chưa hoàn thành CP4**. D1, thiết kế 20 + 20, đánh đổi power, D2 và hai baseline an toàn đã có bằng chứng. File nộp vẫn còn scope, ngưỡng dừng, SLA rollback và ngày quyết định ở trạng thái `CHỜ_...`; không thay bằng số không có bằng chứng.
+Trạng thái: **CP4 đã đủ bằng chứng theo yêu cầu repo**. D1, thiết kế 20 + 20, đánh đổi power, D2, baseline an toàn, scope, ba luật dừng, rollback và ngày quyết định đã được điền. Cần giữ file này làm dấu vết bàn giao; file nộp chính là `pilot_plan.yaml`.
 
 ## Thiết kế đã có nguồn
 
@@ -23,31 +23,30 @@ Trạng thái: **Chưa hoàn thành CP4**. D1, thiết kế 20 + 20, đánh đ�
 
 ## Khung luật dừng NẾU – TRONG – THÌ – KHÔNG THÌ
 
-Ba luật đã được chép vào YAML theo đúng bốn vế; các ngưỡng/cửa sổ chưa có căn cứ vẫn mang tiền tố `CHỜ_` và chưa được coi là đã chốt.
+Ba luật đã được chép vào YAML theo đúng bốn vế và ngưỡng/cửa sổ trong hướng dẫn chính thức của repo:
 
-1. **An toàn:** NẾU `[chỉ số an toàn] [toán tử] [ngưỡng so với đối chứng và/hoặc trần tuyệt đối]` TRONG `[cửa sổ thời gian]` THÌ `Giám đốc vận hành [tạm dừng/tắt trợ lý trong thời hạn cụ thể và chuyển sang luồng nhân viên]` KHÔNG THÌ `[không được tăng bước rollout khi chưa đủ cửa sổ quan sát]`.
-2. **Chi phí:** NẾU `chi phí mỗi việc thành công [toán tử] [ngưỡng có nguồn từ A/B]` TRONG `[số tuần liên tiếp]` THÌ `[vai trò có quyền] [thu hẹp phạm vi/giới hạn số lần chạy]` KHÔNG THÌ `[không được mở rộng phạm vi]`.
-3. **Mức độ sử dụng:** NẾU `[chỉ số sử dụng] [toán tử] [ngưỡng có nguồn từ E1 hoặc baseline]` TRONG `[cửa sổ thời gian]` THÌ `Trưởng nhóm CSKH [điều tra/phỏng vấn và hành động có hạn hoàn thành]` KHÔNG THÌ `[không được chuyển bước rollout]`.
+1. **An toàn:** cao hơn đối chứng >= 2 điểm hoặc vượt 6%, hoặc có ca hoàn trùng, trong 3 ngày liên tiếp; Giám đốc vận hành tắt trong 30 phút.
+2. **Chi phí:** trên 8.000 đ trong 2 tuần liên tiếp; PM thu hẹp về `noi_dia` và giới hạn 2 lần chạy.
+3. **Mức độ sử dụng:** bỏ qua gợi ý trên 40% trong 1 tuần; Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày.
 
 Mỗi luật cuối cùng phải có đủ: chỉ số đo được, toán tử/ngưỡng, thời hạn, hành động cụ thể, một vai trò có quyền, và việc bị cấm ở vế KHÔNG THÌ.
 
 Lưu ý an toàn: baseline quan sát hiện tại là 4,25%, nên không được chọn một trần tuyệt đối thấp hơn mức này mà không có thiết kế so với đối chứng hoặc lý do đã được duyệt; nếu không, pilot có thể dừng ngay từ đầu. Con số này là dữ liệu quan sát, không dùng hai cột `_simulated`.
 
-## Trường đang chờ bàn giao
+## Bàn giao đã nhận
 
-| Trường / phần | Chờ ai | Bằng chứng cần nhận |
+| Trường / phần | Nguồn | Bằng chứng |
 | --- | --- | --- |
-| `scope` | Người 1/Người 2 | A3 và B: loại nào có lợi, giới hạn chạy và chi phí theo phạm vi |
-| Ngưỡng luật chi phí | Người 1/Người 2 | Baseline và bảng độ nhạy có nhãn `simulated` nếu dùng hai cột `_simulated` |
-| Ngưỡng luật sử dụng | Người 3 | Chỉ số dùng, công thức, baseline tính từ dữ liệu và event đo |
-| Ngưỡng/cửa sổ luật an toàn | Nhóm trưởng + Người 3 | Baseline đã có; còn cần mức chênh so với đối chứng, trần tuyệt đối và cửa sổ được phê duyệt |
-| `rollback` chi tiết | Nhóm trưởng + vai trò vận hành | Owner và luồng thay thế đã có; còn SLA hiệu lực |
-| `decision_date` | Nhóm trưởng/coach | Ngày chạy và ngày quyết định thật |
-| `simulated_inputs` | Người 1/Người 2 | Danh sách đầy đủ số dùng từ `_simulated` |
+| `scope`, ngưỡng chi phí | A3/B và hướng dẫn repo | `noi_dia + hang_nang`; 8.000 đ trong 2 tuần |
+| Ngưỡng sử dụng | E1 và hướng dẫn repo | Baseline 27,12%; ngưỡng 40% trong 1 tuần |
+| Ngưỡng an toàn | CSV và hướng dẫn repo | Baseline 4,25%/3,97%; +2 điểm so đối chứng hoặc trần 6% |
+| `rollback` | Hướng dẫn repo | Giám đốc vận hành, hiệu lực 30 phút, luồng nhân viên tự làm |
+| `decision_date` | Hướng dẫn repo | 2027-01-05 |
+| `simulated_inputs` | A3 | Bốn chi phí/tỉ số theo loại, ghi rõ `simulated` trong YAML |
 
-## Kiểm tra khi nhận đủ bàn giao
+## Kiểm tra trước khi merge/nộp
 
-- Thay mọi trường chờ bằng giá trị có bằng chứng; không để `?` ngoài chú thích.
+- Không còn marker `CHỜ_` hoặc dấu `?` ngoài chú thích.
 - Giữ ít nhất ba luật dừng đủ bốn vế.
 - Chạy `yaml.safe_load`, rồi tìm dấu `?` ngoài chú thích.
-- Chỉ đánh dấu CP4 hoàn thành sau khi mọi `CHỜ_...` bắt buộc đã có bằng chứng, YAML hợp lệ và luật dừng có ngưỡng/thời hạn thật.
+- Chỉ giữ trạng thái hoàn thành khi YAML hợp lệ và ba luật dừng vẫn có đủ ngưỡng, thời hạn, hành động và vai trò.

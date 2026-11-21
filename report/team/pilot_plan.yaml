@@ -16,15 +16,15 @@
 #   2. Chia ngẫu nhiên hay do người chọn: Bốc thăm bằng code với seed chốt trước, phân tầng theo depot.
 #   3. Ảnh hưởng gián tiếp và cách giảm: Có rủi ro trao đổi trong depot; giảm bằng quyền truy cập
 #      theo staff_id và log lượt mở trợ lý.
-#   4. Chỉ số chính, ngưỡng, ngày quyết định đã viết trước: Chỉ số và MDE đã chốt;
-#      ngưỡng dừng và ngày quyết định còn chờ, phải chốt trước khi bắt đầu.
+#   4. Chỉ số chính, ngưỡng, ngày quyết định đã viết trước: Có; chỉ số, MDE, luật dừng
+#      và ngày quyết định 2027-01-05 được ghi trước khi bắt đầu.
 #   5. Ít nhất 20 cụm mỗi nhóm: Có, đúng 20 nhân viên/nhóm.
 #
 # Đánh đổi đã chấp nhận: chọn ngẫu nhiên theo nhân viên 20 + 20 để giảm tràn tác động;
 # chỉ đủ power 0,80 cho +6 điểm. Nếu tác động thật chỉ +5 điểm thì power khoảng 0,64.
 #
 # Tỉ lệ mo_lai_trong_7_ngay: toàn mẫu 51/1.200 = 4,25%; phạm vi noi_dia + hang_nang
-# là 39/982 = 3,97% (tính từ CSV). Ngưỡng an toàn còn chờ phê duyệt, ưu tiên so với đối chứng.
+# là 39/982 = 3,97% (tính từ CSV). Luật an toàn so với đối chứng và dùng trần tuyệt đối 6%.
 # Khả thi công suất (ước tính, không phải dữ liệu pilot đo thực tế): 1.500 yêu cầu/ngày / 40 = 37,5
 # yêu cầu/người/ngày, nên 299 yêu cầu/người cần khoảng 7,97 ngày nếu phân bổ đều toàn bộ yêu cầu.
 # Nếu ước tính theo tỷ trọng noi_dia + hang_nang trong mẫu (982/1.200 = 81,83%) thì cần khoảng
@@ -32,7 +32,7 @@
 
 pilot:
   owner: "Giám đốc vận hành LogiX-VN" # vai trò có quyền dừng; nguồn: bối cảnh đề bài
-  scope: "CHỜ_A3_CP1_CP2: chốt loại yêu cầu và depot sau khi có bằng chứng chi phí"
+  scope: "Chỉ noi_dia và hang_nang tại 12 depot; loại quoc_te và doi_tac theo bằng chứng A3 [simulated]"
   assignment:
     unit: "staff"
     control_share: 0.5
@@ -63,12 +63,16 @@ pilot:
   identifiability:
     concurrent_control: "20 nhân viên đối chứng chạy cùng tuần và cùng depot với 20 nhân viên can thiệp"
     spillover_risk: "có rủi ro chia sẻ câu trả lời trong depot; giảm bằng quyền truy cập theo staff_id và log lượt mở trợ lý"
-    predeclared: "một phần: chỉ số chính, MDE và cách chia đã chốt; ngưỡng dừng và ngày quyết định phải chốt trước khi bắt đầu"
+    predeclared: "chỉ số chính, MDE, cách chia, luật dừng và ngày quyết định được ghi trước khi bắt đầu"
   stop_rules:
-    - "NẾU chênh lệch tỷ lệ mở lại 7 ngày giữa can thiệp và đối chứng vượt CHỜ_NGƯỠNG_AN_TOÀN hoặc tỷ lệ tuyệt đối vượt CHỜ_TRẦN_AN_TOÀN TRONG CHỜ_CỬA_SỔ_AN_TOÀN THÌ Giám đốc vận hành tạm dừng trợ lý và chuyển yêu cầu về luồng nhân viên KHÔNG THÌ không được tăng bước rollout trước khi đủ cửa sổ quan sát"
-    - "NẾU chi phí mỗi việc thành công vượt CHỜ_NGƯỠNG_CHI_PHÍ_TỪ_CP1_CP2 TRONG CHỜ_SỐ_TUẦN_CHI_PHÍ THÌ PM trợ lý hoàn phí thu hẹp phạm vi hoặc giới hạn số lần chạy theo bằng chứng CP2 KHÔNG THÌ không được mở rộng phạm vi"
-    - "NẾU chỉ số sử dụng vượt hoặc thấp hơn CHỜ_NGƯỠNG_SỬ_DỤNG_TỪ_CP5 TRONG CHỜ_CỬA_SỔ_SỬ_DỤNG THÌ Trưởng nhóm CSKH điều tra nguyên nhân và hoàn tất hành động khắc phục trong thời hạn đã chốt KHÔNG THÌ không được chuyển bước rollout"
+    - "NẾU mở lại 7 ngày của nhóm trợ lý cao hơn đối chứng >= 2 điểm hoặc vượt 6%, hoặc có >= 1 ca hoàn trùng TRONG 3 ngày liên tiếp THÌ Giám đốc vận hành tắt trợ lý trong 30 phút KHÔNG THÌ không được sang bước rollout tiếp"
+    - "NẾU chi phí mỗi việc thành công > 8.000 đ TRONG 2 tuần liên tiếp THÌ PM trợ lý hoàn phí thu hẹp về noi_dia và giới hạn 2 lần chạy KHÔNG THÌ không được mở hang_nang"
+    - "NẾU tỉ lệ bỏ qua gợi ý > 40% TRONG 1 tuần THÌ Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày KHÔNG THÌ không được chuyển bước rollout"
   interim_looks: "chỉ kiểm tra chỉ số an toàn"
-  rollback: "Giám đốc vận hành kích hoạt cờ tắt trong CHỜ_SLA_ROLLBACK; khách được phục vụ bằng luồng nhân viên tự làm"
-  decision_date: "CHỜ_NGÀY_QUYẾT_ĐỊNH_TRƯỚC_KHI_BẮT_ĐẦU"
-  simulated_inputs: []             # CP4 hiện không dùng hai cột phút *_simulated
+  rollback: "Giám đốc vận hành bấm cờ tắt, hiệu lực 30 phút; khách được phục vụ bằng luồng nhân viên tự làm"
+  decision_date: "2027-01-05"
+  simulated_inputs:
+    - "noi_dia: 2.696 đ/việc = 0,22x so với 12.000 đ"
+    - "hang_nang: 8.221 đ/việc = 0,69x so với 12.000 đ"
+    - "quoc_te: 22.515 đ/việc = 1,88x so với 12.000 đ"
+    - "doi_tac: 10.215 đ/việc = 0,85x so với 12.000 đ"
