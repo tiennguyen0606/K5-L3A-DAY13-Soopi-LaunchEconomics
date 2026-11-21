@@ -2,7 +2,7 @@
 
 Nhóm số n chấm nhóm số n + 1; nhóm cuối chấm nhóm 1. Chấm theo bằng chứng trong hồ sơ, không theo cách trình bày: một đề xuất No-go có lý do bằng số được điểm cao hơn một đề xuất Go bỏ qua con số bất lợi.
 
-- **Nhóm chấm (hội đồng): Soopi-L3A
+- **Nhóm chấm (hội đồng):** Soopi-L3A.
 - **Nhóm được chấm:** NhomABC — L3A.
 - **Repository:** https://github.com/LufkyMama/K5-L3A-DAY13-NhomABC-LaunchEconomics
 - **Phiên bản được đối chiếu:** `main` tại commit `992a07b53f3c4ea0e18aa21d7a25e102c054d11a` (21/11/2026).
